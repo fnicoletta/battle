@@ -4,6 +4,9 @@ import {FaCompass, FaBriefcase, FaUsers, FaUserFriends, FaUser } from 'react-ico
 import Card from './card.js'
 import PropTypes from 'prop-types'
 import Loading from './loading.js'
+import Tooltip from './tooltip.js'
+
+
 
 function ProfileList({ profile }) {
   return(
@@ -14,14 +17,18 @@ function ProfileList({ profile }) {
               </li>
               {profile.location && (
                 <li>
+                <Tooltip text={`User's Location`}>
                 <FaCompass color='rgb(144, 115, 255)' size={22}/>
                 {profile.location}
+                </Tooltip>
                 </li>
                 )}
               {profile.company && (
                 <li>
+                <Tooltip text={`User's Company`}>
                 <FaBriefcase color='#795548' size={22}/>
                 {profile.company}
+                </Tooltip>
                 </li>
                 )}
               <li>
