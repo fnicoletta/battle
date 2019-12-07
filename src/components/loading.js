@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 const styles = {
+	content: {
 	fontSize: '35px',
 	position: 'absolute',
 	left: '0',
@@ -9,14 +10,11 @@ const styles = {
 	marginTop: '20px',
 	textAlign: 'center'
 }
+}
 
 export default class Loading extends Component {
-	constructor(props) {
-		super(props)
-
-		this.state = {
-			content: props.text
-		}
+	state = {
+			content: this.props.text
 	}
 
 	componentDidMount() {
@@ -41,7 +39,7 @@ export default class Loading extends Component {
 
 	render(){
 		return(
-			<p style={styles}>
+			<p style={styles.content}>
 				{this.state.content}
 			</p>
 		)

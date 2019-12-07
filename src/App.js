@@ -1,17 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component, lazy, Suspense } from 'react'
 import './index.css'
-import Popular from './components/popular.js'
-import Battle from './components/battle.js'
-import Results from './components/results.js'
 import { ThemeProvider } from './contexts/theme.js'
 import Nav from './components/nav.js'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import Loading from './components/loading.js'
+
+const Popular = lazy(() => import('./components/popular.js'))
+const Battle = lazy(() => import('./components/battle.js'))
+const Results = lazy(() => import('./components/results.js'))
+
 
 class App extends Component {
-	constructor(props) {
-		super(props)
-
-		this.state = {
+	state = {
 			theme: 'light',
 			toggleTheme: () => {
 				this.setState(({ theme }) => ({
@@ -19,17 +19,23 @@ class App extends Component {
 				}))
 			}
 		}
-	}
+
   render() {
   return (
   	<Router>
 	  	<ThemeProvider value={this.state}>
 		  	<div className={this.state.theme}>
 			   <div className='container'>
-			    	<Nav />
+			    <Nav />
+
+			    <Suspense fallback={<Loading />}>
+			    <Switch>
 			      <Route exact path='/' component={Popular} />
 			      <Route exact path='/battle' component={Battle} />
 			      <Route exact path='/battle/results' component={Results} />
+			      <Route render={() => <h1>404</h1>} />
+			    </Switch>
+			    </Suspense>
 			   </div>
 		   </div>
 	    </ThemeProvider>
